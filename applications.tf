@@ -98,8 +98,6 @@ resource "helm_release" "jenkins" {
   }
 }
 
-
-#Deploy ArgoCD
 resource "helm_release" "argocd" {
   name       = "argocd"
   repository = "https://argoproj.github.io/argo-helm"
@@ -150,50 +148,5 @@ resource "helm_release" "argocd" {
   set {
     name  = "server.ingress.annotations.alb\\.ingress\\.kubernetes\\.io/subnets"
     value = yamlencode(["subnet-055bdb06e6d448f34", "subnet-0d9dece2732432440"])
-  }
-}
-resource "helm_release" "jenkins" {
-  name             = "jenkins"
-  repository       = "https://charts.jenkins.io"
-  chart            = "jenkins"
-  namespace        = "jenkins"
-  create_namespace = true
-
-  set {
-    name  = "controller.ingress.enabled"
-    value = "true"
-  }
-
-  set {
-    name  = "controller.ingress.path"
-    value = "/jenkins"
-  }
-
-  set {
-    name  = "controller.ingress.pathType"
-    value = "Prefix"
-  }
-}
-
-resource "helm_release" "argocd" {
-  name             = "argocd"
-  repository       = "https://argoproj.github.io/argo-helm"
-  chart            = "argo-cd"
-  namespace        = "argocd"
-  create_namespace = true
-
-  set {
-    name  = "server.ingress.enabled"
-    value = "true"
-  }
-
-  set {
-    name  = "server.ingress.path"
-    value = "/argocd"
-  }
-
-  set {
-    name  = "server.ingress.pathType"
-    value = "Prefix"
   }
 }
