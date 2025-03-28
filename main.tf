@@ -26,7 +26,7 @@ module "eks" {
 
       disk_size = 50
 
-      subnet_ids = var.private_subnet_ids
+      subnet_ids = module.vpc.private_subnets
 
       iam_role_arn = aws_iam_role.node_group_role.arn
 
