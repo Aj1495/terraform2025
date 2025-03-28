@@ -1,0 +1,8 @@
+modules = ["bash"]
+run = "terraform init; terraform plan; terraform apply"
+
+[nix]
+channel = "stable-24_05"
+
+[deployment]
+run = ["sh", "-c", "terraform init; terraform plan; terraform apply"]
