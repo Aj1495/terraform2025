@@ -3,8 +3,9 @@
 
 provider "registry.terraform.io/hashicorp/aws" {
   version     = "5.80.0"
-  constraints = ">= 3.72.0, >= 4.45.0, ~> 5.0"
+  constraints = ">= 5.0.0, ~> 5.0"
   hashes = [
+    "h1:N5Wfsf4xe5DJfSeo0G/ulkIxzyfmUIoSj/hAiZ2DaKU=",
     "h1:q2pqSs7uPWvxunrBYjyirXARlxFIoxn2Lju42uJbxk4=",
     "zh:0b1655e39639d60f2de2860a5df8642f9556ba0ca04529c1b861fde4935cb0df",
     "zh:13dc0155e0a11edceee29ce687fc04c5a5a85f3324c67556472713cfd52e5807",
@@ -24,31 +25,12 @@ provider "registry.terraform.io/hashicorp/aws" {
   ]
 }
 
-provider "registry.terraform.io/hashicorp/cloudinit" {
-  version     = "2.3.5"
-  constraints = ">= 2.0.0"
-  hashes = [
-    "h1:Sf1Lt21oTADbzsnlU38ylpkl8YXP0Beznjcy5F/Yx64=",
-    "zh:17c20574de8eb925b0091c9b6a4d859e9d6e399cd890b44cfbc028f4f312ac7a",
-    "zh:348664d9a900f7baf7b091cf94d657e4c968b240d31d9e162086724e6afc19d5",
-    "zh:5a876a468ffabff0299f8348e719cb704daf81a4867f8c6892f3c3c4add2c755",
-    "zh:6ef97ee4c8c6a69a3d36746ba5c857cf4f4d78f32aa3d0e1ce68f2ece6a5dba5",
-    "zh:78d5eefdd9e494defcb3c68d282b8f96630502cac21d1ea161f53cfe9bb483b3",
-    "zh:8283e5a785e3c518a440f6ac6e7cc4fc07fe266bf34974246f4e2ef05762feda",
-    "zh:a44eb5077950168b571b7eb65491246c00f45409110f0f172cc3a7605f19dba9",
-    "zh:aa0806cbff72b49c1b389c0b8e6904586e5259c08dabb7cb5040418568146530",
-    "zh:bec4613c3beaad9a7be7ca99cdb2852073f782355b272892e6ee97a22856aec1",
-    "zh:d7fe368577b6c8d1ae44c751ed42246754c10305c7f001cc0109833e95aa107d",
-    "zh:df2409fc6a364b1f0a0f8a9cd8a86e61e80307996979ce3790243c4ce88f2915",
-    "zh:ed3c263396ff1f4d29639cc43339b655235acf4d06296a7c120a80e4e0fd6409",
-  ]
-}
-
 provider "registry.terraform.io/hashicorp/helm" {
   version     = "2.16.1"
-  constraints = ">= 2.0.0"
+  constraints = "~> 2.7"
   hashes = [
     "h1:3VdXbh+m09VEAdSguT7Ea2MMnOVPZBYx4sUqvo6NPxo=",
+    "h1:TerRBdq69SxIWg3ET2VE0bcP0BYRIWZOp1QxXj/14Fk=",
     "zh:0003f6719a32aee9afaeeb001687fc0cfc8c2d5f54861298cf1dc5711f3b4e65",
     "zh:16cd5bfee09e7bb081b8b4470f31a9af508e52220fd97fd81c6dda725d9422fe",
     "zh:51817de8fdc2c2e36785f23fbf4ec022111bd1cf7679498c16ad0ad7471c16db",
@@ -66,8 +48,9 @@ provider "registry.terraform.io/hashicorp/helm" {
 
 provider "registry.terraform.io/hashicorp/kubernetes" {
   version     = "2.34.0"
-  constraints = ">= 2.10.0, ~> 2.22"
+  constraints = "~> 2.22"
   hashes = [
+    "h1:QOiO85qZnkUm7kAtuPkfblchuKPWUqRdNVWE5agpr8k=",
     "h1:SiShdPw9XInKFuX740Il4fcA2kmH84FFJObpeDeG+QQ=",
     "zh:076b451dc8629c49f4260de6d43595e98ac5f1bdbebb01d112659ef94d99451f",
     "zh:0c29855dbd3c6ba82fce680fa5ac969d4e09e20fecb4ed40166b778bd19895a4",
@@ -80,26 +63,6 @@ provider "registry.terraform.io/hashicorp/kubernetes" {
     "zh:95e728efa2a31a63b879fd093507466e509e3bfc9325eb35ea3dc28fed15c6f7",
     "zh:972b9e3ca2b6a1057dcf5003fc78cabb0dd8847580bddeb52d885ebd64df38ea",
     "zh:ef6114217965d55f5bddbd7a316b8f85f15b8a77c075fcbed95813039d522e0a",
-    "zh:f569b65999264a9416862bca5cd2a6177d94ccb0424f3a4ef424428912b9cb3c",
-  ]
-}
-
-provider "registry.terraform.io/hashicorp/tls" {
-  version     = "4.0.6"
-  constraints = ">= 3.0.0"
-  hashes = [
-    "h1:n3M50qfWfRSpQV9Pwcvuse03pEizqrmYEryxKky4so4=",
-    "zh:10de0d8af02f2e578101688fd334da3849f56ea91b0d9bd5b1f7a243417fdda8",
-    "zh:37fc01f8b2bc9d5b055dc3e78bfd1beb7c42cfb776a4c81106e19c8911366297",
-    "zh:4578ca03d1dd0b7f572d96bd03f744be24c726bfd282173d54b100fd221608bb",
-    "zh:6c475491d1250050765a91a493ef330adc24689e8837a0f07da5a0e1269e11c1",
-    "zh:81bde94d53cdababa5b376bbc6947668be4c45ab655de7aa2e8e4736dfd52509",
-    "zh:abdce260840b7b050c4e401d4f75c7a199fafe58a8b213947a258f75ac18b3e8",
-    "zh:b754cebfc5184873840f16a642a7c9ef78c34dc246a8ae29e056c79939963c7a",
-    "zh:c928b66086078f9917aef0eec15982f2e337914c5c4dbc31dd4741403db7eb18",
-    "zh:cded27bee5f24de6f2ee0cfd1df46a7f88e84aaffc2ecbf3ff7094160f193d50",
-    "zh:d65eb3867e8f69aaf1b8bb53bd637c99c6b649ba3db16ded50fa9a01076d1a27",
-    "zh:ecb0c8b528c7a619fa71852bb3fb5c151d47576c5aab2bf3af4db52588722eeb",
     "zh:f569b65999264a9416862bca5cd2a6177d94ccb0424f3a4ef424428912b9cb3c",
   ]
 }
