@@ -1,48 +1,29 @@
-# Please edit the object below. Lines beginning with a '#' will be ignored,
-# and an empty file will abort the edit. If an error occurs while saving this file will be
-# reopened with the relevant failures.
-#
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
     alb.ingress.kubernetes.io/group.name: shared-alb
-    alb.ingress.kubernetes.io/healthcheck-path: /login
     alb.ingress.kubernetes.io/load-balancer-attributes: load_balancing.cross_zone.enabled=true
     alb.ingress.kubernetes.io/scheme: internal
-    alb.ingress.kubernetes.io/subnets: subnet-012c4c01962e9b586,subnet-0fa6dc16cef4351d1
     alb.ingress.kubernetes.io/target-type: ip
     kubernetes.io/ingress.class: alb
-    meta.helm.sh/release-name: jenkins
-    meta.helm.sh/release-namespace: jenkins
-  creationTimestamp: "2024-12-22T02:28:46Z"
-  deletionGracePeriodSeconds: 0
-  deletionTimestamp: "2024-12-22T02:47:11Z"
-  finalizers:
-  - group.ingress.k8s.aws/shared-alb
-  generation: 5
-  labels:
-    app.kubernetes.io/component: jenkins-controller
-    app.kubernetes.io/instance: jenkins
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: jenkins
-    helm.sh/chart: jenkins-5.7.0
-  name: jenkins
-  namespace: jenkins
-  resourceVersion: "42811"
-  uid: b3b28058-f3a8-4d27-9eb6-4f4294fcd47a
+  name: shared-ingress
+  namespace: default
 spec:
   rules:
   - http:
       paths:
-      - backend:
+      - path: /jenkins
+        pathType: Prefix
+        backend:
           service:
             name: jenkins
             port:
-              number: 80
-        path: /jenkins
+              number: 8080
+      - path: /argocd
         pathType: Prefix
-status:
-  loadBalancer:
-    ingress:
-    - hostname: k8s-sharedalb-da796dddb1-767768427.us-east-1.elb.amazonaws.com
+        backend:
+          service:
+            name: argocd-server
+            port:
+              number: 80
