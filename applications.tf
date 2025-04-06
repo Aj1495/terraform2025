@@ -55,6 +55,16 @@ resource "helm_release" "jenkins" {
   }
 
   set {
+    name  = "controller.jenkinsUrl"
+    value = "/jenkins"
+  }
+
+  set {
+    name  = "controller.jenkins.agentProtocol"
+    value = "[\"JNLP4-connect\"]"
+  }
+
+  set {
     name  = "controller.resources.requests.cpu"
     value = "600m"
   }
