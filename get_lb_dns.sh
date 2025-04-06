@@ -3,7 +3,7 @@ set -e
 
 CLUSTER_NAME="my-eks-cluster"
 REGION="us-east-1"
-NAMESPACE="jenkins"
+NAMESPACE="default"
 INGRESS_NAME="shared-ingress"
 MAX_RETRIES=10
 SLEEP_SECONDS=30
