@@ -19,6 +19,11 @@ resource "helm_release" "jenkins" {
       controller = {
         serviceType = "ClusterIP"
         servicePort = 8080
+        serviceAnnotations = {
+          "alb.ingress.kubernetes.io/healthcheck-path" = "/login"
+          "alb.ingress.kubernetes.io/healthcheck-port" = "8080"
+          "alb.ingress.kubernetes.io/healthcheck-protocol" = "HTTP"
+        }
         ingress = {
           enabled = false
         }
@@ -52,6 +57,11 @@ resource "helm_release" "argocd" {
         service = {
           type = "ClusterIP"
           port = 80
+          annotations = {
+            "alb.ingress.kubernetes.io/healthcheck-path" = "/"
+            "alb.ingress.kubernetes.io/healthcheck-port" = "80"
+            "alb.ingress.kubernetes.io/healthcheck-protocol" = "HTTP"
+          }
         }
         ingress = {
           enabled = false
