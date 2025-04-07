@@ -1,8 +1,0 @@
-modules = ["bash"]
-run = "terraform init"
-
-[nix]
-channel = "stable-24_05"
-
-[deployment]
-run = ["sh", "-c", "terraform init"]
