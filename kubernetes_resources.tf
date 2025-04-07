@@ -3,7 +3,12 @@ resource "kubernetes_manifest" "shared_ingress" {
   manifest = yamldecode(file("${path.module}/ingress.yaml"))
 }
 
-resource "kubernetes_manifest" "services" {
-  depends_on = [helm_release.jenkins, helm_release.argocd]
-  manifest = yamldecode(file("${path.module}/services.yaml"))
+resource "kubernetes_manifest" "jenkins_service" {
+  depends_on = [helm_release.jenkins]
+  manifest = yamldecode(file("${path.module}/jenkins-service.yaml"))
+}
+
+resource "kubernetes_manifest" "argocd_service" {
+  depends_on = [helm_release.argocd]
+  manifest = yamldecode(file("${path.module}/argocd-service.yaml"))
 }
