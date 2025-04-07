@@ -19,13 +19,13 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: jenkins.jenkins
+            name: jenkins
             port:
               number: 8080
       - path: /argocd
         pathType: Prefix
         backend:
           service:
-            name: argocd-server.argocd
+            name: argocd-server
             port:
               number: 80 

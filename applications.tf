@@ -19,6 +19,7 @@ resource "helm_release" "jenkins" {
       controller = {
         serviceType = "ClusterIP"
         servicePort = 8080
+        serviceName = "jenkins"
         serviceAnnotations = {
           "alb.ingress.kubernetes.io/healthcheck-path" = "/login"
           "alb.ingress.kubernetes.io/healthcheck-port" = "8080"
@@ -88,6 +89,7 @@ resource "helm_release" "argocd" {
         service = {
           type = "ClusterIP"
           port = 80
+          name = "argocd-server"
           annotations = {
             "alb.ingress.kubernetes.io/healthcheck-path" = "/"
             "alb.ingress.kubernetes.io/healthcheck-port" = "80"
