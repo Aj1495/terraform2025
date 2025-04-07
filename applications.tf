@@ -40,6 +40,37 @@ resource "helm_release" "jenkins" {
             memory = "2Gi"
           }
         }
+        startupProbe = {
+          enabled = true
+          httpGet = {
+            path = "/login"
+            port = 8080
+          }
+          initialDelaySeconds = 90
+          timeoutSeconds = 5
+          periodSeconds = 10
+          failureThreshold = 12
+        }
+        livenessProbe = {
+          enabled = true
+          httpGet = {
+            path = "/login"
+            port = 8080
+          }
+          initialDelaySeconds = 120
+          timeoutSeconds = 5
+          failureThreshold = 12
+        }
+        readinessProbe = {
+          enabled = true
+          httpGet = {
+            path = "/login"
+            port = 8080
+          }
+          initialDelaySeconds = 120
+          timeoutSeconds = 5
+          periodSeconds = 10
+        }
       }
     })
   ]
