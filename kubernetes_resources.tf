@@ -7,8 +7,3 @@ resource "kubernetes_manifest" "jenkins_service" {
   depends_on = [helm_release.jenkins]
   manifest = yamldecode(file("${path.module}/jenkins-service.yaml"))
 }
-
-resource "kubernetes_manifest" "argocd_service" {
-  depends_on = [helm_release.argocd]
-  manifest = yamldecode(file("${path.module}/argocd-service.yaml"))
-}

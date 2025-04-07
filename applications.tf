@@ -13,7 +13,7 @@ resource "helm_release" "jenkins" {
     yamlencode({
       persistence = {
         enabled       = true
-        storageClass  = "gp2-ebs"
+        storageClass  = "gp2"
         size          = "7Gi"
       }
       controller = {
