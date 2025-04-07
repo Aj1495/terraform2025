@@ -47,10 +47,10 @@ resource "helm_release" "jenkins" {
             path = "/login"
             port = 8080
           }
-          initialDelaySeconds = 90
-          timeoutSeconds = 5
-          periodSeconds = 10
-          failureThreshold = 12
+          initialDelaySeconds = 300
+          timeoutSeconds = 10
+          periodSeconds = 30
+          failureThreshold = 20
         }
         livenessProbe = {
           enabled = true
@@ -58,9 +58,10 @@ resource "helm_release" "jenkins" {
             path = "/login"
             port = 8080
           }
-          initialDelaySeconds = 120
-          timeoutSeconds = 5
-          failureThreshold = 12
+          initialDelaySeconds = 300
+          timeoutSeconds = 10
+          periodSeconds = 30
+          failureThreshold = 20
         }
         readinessProbe = {
           enabled = true
@@ -68,9 +69,27 @@ resource "helm_release" "jenkins" {
             path = "/login"
             port = 8080
           }
-          initialDelaySeconds = 120
-          timeoutSeconds = 5
-          periodSeconds = 10
+          initialDelaySeconds = 300
+          timeoutSeconds = 10
+          periodSeconds = 30
+          failureThreshold = 20
+        }
+        installPlugins = [
+          "kubernetes:1.39.0",
+          "workflow-aggregator:2.6",
+          "git:5.0.0",
+          "configuration-as-code:1.59"
+        ]
+        initializeOnce = true
+        numExecutors = 2
+        adminUser = "admin"
+        adminPassword = "admin"
+        overwritePlugins = true
+        JCasC = {
+          enabled = true
+          configScripts = {
+            welcome-message = "jenkins.systemMessage = 'Welcome to our CI/CD server. This Jenkins instance is managed as code.'"
+          }
         }
       }
     })
