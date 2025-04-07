@@ -82,8 +82,10 @@ resource "helm_release" "jenkins" {
         ]
         initializeOnce = true
         numExecutors = 2
-        adminUser = "admin"
-        adminPassword = "admin"
+        admin = {
+          username = "admin"
+          password = "admin"
+        }
         overwritePlugins = true
         JCasC = {
           enabled = true
