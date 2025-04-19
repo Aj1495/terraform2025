@@ -65,6 +65,18 @@ resource "null_resource" "apply_kubernetes_manifests" {
     EOT
   }
 
+  # This provisioner runs during terraform destroy
+  provisioner "local-exec" {
+    when    = destroy
+    command = <<-EOT
+      kubectl delete -f ${path.module}/Ingress_jenkins.yaml -n jenkins
+      kubectl delete -f ${path.module}/Ingress_argocd.yaml -n argocd
+      kubectl delete -f ${path.module}/Ingress_Controller.yaml 
+    EOT
+    # Adding on_failure = continue prevents destroy from failing if resources are already gone
+    on_failure = continue
+  }
+
   # This ensures the kubectl commands run every time Terraform applies changes
   triggers = {
     always_run = "${timestamp()}"
