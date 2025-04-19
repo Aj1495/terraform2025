@@ -21,3 +21,9 @@ variable "jenkins_hostname" {
   type        = string
   default     = "jenkins.example.com"
 }
+
+variable "dns_hostname" {
+  description = "DNS hostname for the shared ALB"
+  type        = string
+  default     = "apps.example.com"
+}

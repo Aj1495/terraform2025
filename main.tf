@@ -7,6 +7,8 @@ module "eks" {
 
   cluster_name    = var.cluster_name
   cluster_version = "1.27"
+  
+  cluster_enabled_log_types = []  # Disable CloudWatch Logs temporarily
 
   vpc_id     = module.vpc.vpc_id
   subnet_ids = module.vpc.private_subnets
@@ -43,5 +45,28 @@ module "eks" {
         }
       }
     }
+  }
+}
+
+resource "null_resource" "apply_kubernetes_manifests" {
+  depends_on = [
+    # Add dependencies to your Terraform resources here, such as:
+    # module.eks,
+    # helm_release.jenkins,
+    # helm_release.argocd,
+    # or any other relevant resources that must be created first
+  ]
+
+  provisioner "local-exec" {
+    command = <<-EOT
+      kubectl apply -f ${path.module}/Ingress_Controller.yaml
+      kubectl apply -f ${path.module}/Ingress_argocd.yaml -n argocd
+      kubectl apply -f ${path.module}/Ingress_jenkins.yaml -n jenkins
+    EOT
+  }
+
+  # This ensures the kubectl commands run every time Terraform applies changes
+  triggers = {
+    always_run = "${timestamp()}"
   }
 }

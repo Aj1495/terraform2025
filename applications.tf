@@ -1,6 +1,5 @@
 resource "helm_release" "jenkins" {
   depends_on       = [
-    helm_release.aws_load_balancer_controller,
     helm_release.aws_ebs_csi_driver
   ]
   name             = "jenkins"
@@ -21,16 +20,17 @@ resource "helm_release" "jenkins" {
         serviceType = "ClusterIP"
         servicePort = 8080
         serviceName = "jenkins"
-        serviceAnnotations = {
-          "alb.ingress.kubernetes.io/healthcheck-path" = "/login"
-          "alb.ingress.kubernetes.io/healthcheck-port" = "8080"
-          "alb.ingress.kubernetes.io/healthcheck-protocol" = "HTTP"
-        }
         ingress = {
           enabled = false
         }
         jenkinsUriPrefix = "/jenkins"
         jenkinsUrl = "/jenkins"
+        containerEnv = [
+          {
+            name = "JENKINS_OPTS"
+            value = "--prefix=/jenkins"
+          }
+        ]
         agentProtocol = ["JNLP4-connect"]
         resources = {
           requests = {
@@ -76,7 +76,7 @@ resource "helm_release" "jenkins" {
           failureThreshold = 20
         }
         installPlugins = [
-          "kubernetes:1.37.0",
+          "kubernetes",
           "workflow-aggregator:2.6",
           "git:5.0.0",
           "configuration-as-code:1836.vccda_4a_122a_a_e"
@@ -91,20 +91,19 @@ resource "helm_release" "jenkins" {
         JCasC = {
           enabled = true
           configScripts = {
-            welcome-message = "jenkins.systemMessage = 'Welcome to our CI/CD server. This Jenkins instance is managed as code.'"
+            welcome-message = <<-EOT
+              jenkins:
+                systemMessage: "Welcome to our CI/CD server. This Jenkins instance is managed as code."
+            EOT
           }
         }
-        # Simplified initialization settings
         initScripts = [
           "echo 'Starting Jenkins initialization...'",
           "echo 'Waiting for Jenkins to be ready...'"
         ]
-        # Disable unnecessary features during startup
         disableRememberMe = true
         disableSetupWizard = true
-        # Add JVM options for better performance
         javaOpts = "-Djenkins.install.runSetupWizard=false -Djava.awt.headless=true -Dhudson.model.DirectoryBrowserSupport.CSP=\"\""
-        # Add security settings
         securityRealm = {
           local = {
             allowsSignup = false
@@ -116,7 +115,6 @@ resource "helm_release" "jenkins" {
             ]
           }
         }
-        # Add authorization strategy
         authorizationStrategy = {
           loggedInUsersCanDoAnything = {
             allowAnonymousRead = false
@@ -140,16 +138,11 @@ resource "helm_release" "argocd" {
           type = "ClusterIP"
           port = 80
           name = "argocd-server"
-          annotations = {
-            "alb.ingress.kubernetes.io/healthcheck-path" = "/"
-            "alb.ingress.kubernetes.io/healthcheck-port" = "80"
-            "alb.ingress.kubernetes.io/healthcheck-protocol" = "HTTP"
-          }
         }
         ingress = {
           enabled = false
         }
-        extraArgs = ["--basehref=/argocd", "--insecure"]
+        extraArgs = ["--rootpath", "/argocd", "--insecure"]
       }
     })
   ]
